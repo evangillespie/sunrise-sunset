@@ -1,5 +1,5 @@
-from astral import Astral
-from .enums import CITY_NAMES
+from .geocoder import FileGeocoder
+from .enums import ALL_CITY_NAMES
 from datetime import date, datetime, timedelta
 import pytz
 
@@ -9,7 +9,7 @@ class SunSetter(object):
 	def __init__(self):
 		super(SunSetter, self).__init__()
 
-		self.a = Astral()
+		self.geo = FileGeocoder()
 		self.cities = dict()
 		self.date = datetime.now(pytz.UTC)	# date to find sunrise/sunset for
 		
@@ -50,10 +50,10 @@ class SunSetter(object):
 		self._get_cities()
 
 	def _get_cities(self):
-		for name, continent in CITY_NAMES.iteritems():	
+		for name, continent in ALL_CITY_NAMES.iteritems():	
 			for city in continent:
 				try:
-					c = self.a[city]
+					c = self.geo[city]
 					s = c.sun(date=self.date, local=False)
 
 					city_dict = {

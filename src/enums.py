@@ -1,6 +1,37 @@
-# SOURCE: http://en.wikipedia.org/wiki/List_of_metropolitan_areas_by_population
+import os
 
-CITY_NAMES = {
+FILE_GEOCODER_PATH = os.path.dirname(os.path.realpath(__file__))+'/../assets/locations.json'
+
+ALL_CITY_NAMES = {
+	'AFRICA': [
+		'Cairo',
+		'Mogadishu',
+		'Accra',
+		'Nairobi',
+		'Algiers',
+		'Luanda',
+		'Dakar',
+		'Pretoria',
+		'Tripoli',
+		'Harare',
+		'Abuja',
+		'Lusaka',
+		'Kampala',
+		'Bamako',
+		'Maputo',
+		'Rabat',
+		'Antananarivo',
+		'Ouagadougou',
+		'Conakry',
+		'Tunis',
+		'Freetown',
+		'Cotonou',
+		'Monrovia'
+	]
+}
+
+# SOURCE: http://en.wikipedia.org/wiki/List_of_metropolitan_areas_by_population
+LOCAL_CITY_NAMES = {
 	'AFRICA': [
 		'Cairo',
 		'Mogadishu',
