@@ -26,10 +26,22 @@ class SunSetter(object):
 		if not time:
 			time = datetime.now(pytz.UTC)
 
+		short_time = None 	# 24 hour starting time
+		short_cities = []
 		for city, data in self.cities.iteritems():
-			delt = time-data['sunset']
+			delt = data['sunset']-time
+			if short_time == None:
+				short_time = delt
 
-			print "%s: %s" % (city, delt.seconds)
+			if delt < short_time:
+				short_time = delt
+				short_cities = [city]
+			elif delt == short_time:
+				short_cities.append(city)
+
+		print short_cities
+		print "in %s" % short_time
+			
 
 	def _prime(self):
 		"""
@@ -45,8 +57,6 @@ class SunSetter(object):
 					s = c.sun(date=self.date, local=False)
 
 					city_dict = {
-						# "city": c,
-						# "sun": s,
 						"sunset": s['sunset'],
 						"sunrise": s['sunrise']
 					}
