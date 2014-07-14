@@ -11,6 +11,7 @@ class SunSetter(object):
 
 		self.geo = FileGeocoder()
 		self.cities = dict()
+		# TODO: make sure to calclulate the NEXT sunset
 		self.date = datetime.now(pytz.UTC)	# date to find sunrise/sunset for
 		
 		self._prime()
@@ -24,9 +25,10 @@ class SunSetter(object):
 		:return str: city name or None
 		"""
 		if not time:
+			# TODO: make sure to calclulate the NEXT sunset
 			time = datetime.now(pytz.UTC)
 
-		short_time = None 	# 24 hour starting time
+		short_time = None
 		short_cities = []
 		for city, data in self.cities.iteritems():
 			delt = data['sunset']-time
