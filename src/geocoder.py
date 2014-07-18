@@ -59,11 +59,18 @@ class FileGeocoder(object):
 
         :param location: location object to save
         """
-        self.data[key] = pickle.dumps(location)
+        try:
+            val = pickle.dumps(location)
+            val = val.encode('utf8')
+            self.data[key] = val
+        except UnicodeDecodeError:
+            print "===="
+            print "cant deal with: %s" % key
+            print "===="
 
     def commit_to_file(self):
         """
         commit all the pending changes to the file
-        """
+        """   
         with open(self.file_path, "w") as f:
             json.dump(self.data, f, sort_keys=True, indent=2)
