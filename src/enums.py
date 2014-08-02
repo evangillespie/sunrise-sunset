@@ -25,14 +25,12 @@ ALL_CITY_NAMES = {
 		'Cotonou',
 		'Monrovia',
 	#Central Africa
-		'Goma',
 		'Kinshasa',
 		'Lubumbashi',
 		'Brazzaville',
 		'Pointe-Noire',
 		'Malabo',
 		'Libreville',
-		'Sao Tome',
 	#East Africa
 		'Bujumbura',
 		'Hahaya',
@@ -77,7 +75,6 @@ ALL_CITY_NAMES = {
 	'AMERICAS': [
 		'Buenos Aires',
 		'Lima',
-		'Bogota',
 		'Santiago',
 		'Brasilia',
 		'Seattle',
