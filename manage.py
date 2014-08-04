@@ -6,6 +6,7 @@ from src.exceptions import LocationNotFoundError
 from astral import AstralError
 from optparse import OptionParser
 from sys import argv
+from time import sleep
 
 __author__ = ('evan', )
 
@@ -35,7 +36,8 @@ def run_loop(interval=60):
     :param interval: number of seconds between each check
     """
     while True:
-        print "in the loop"
+        print "in the loop. Implement me properly"
+        sleep(interval)
 
 
 def print_help():
