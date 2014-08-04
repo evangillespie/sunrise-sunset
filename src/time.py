@@ -12,6 +12,7 @@ class SunTime(object):
 		:param m: minutes past the hour
 		:param s: seconds past the minute
 		"""
+		# TODO: consider using time.time instead of integers
 		self.h = h
 		self.m = m
 		self.s = s
