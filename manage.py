@@ -28,20 +28,30 @@ def populate_file_geocoder():
     except AstralError as e:
         print "ASTRAL ERROR: %s" % e
 
+def run_loop(interval=60):
+    """
+    run an infinite loop and display the closest sunset and sunrise every <interval> seconds
+    
+    :param interval: number of seconds between each check
+    """
+    while True:
+        print "in the loop"
+
+
 def print_help():
     print "USAGE: %s <command>" % argv[0]
     print "COMMANDS:"
     print "store_locations: save all locations for offline use"
     print "run: run the infinite looping program"
     print "times: show a list of all sunset and sunrise times, in order"
+
 if __name__ == '__main__':
     if len(argv) >= 2:
         command = argv[1]
         if command == 'store_locations':
             populate_file_geocoder()
         elif command == 'run':
-            # TODO: implement
-            raise NotImplementedError()
+            run_loop()
         elif command == 'times':
             # TODO: implement
             raise NotImplementedError()

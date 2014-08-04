@@ -1,5 +1,6 @@
 from .geocoder import FileGeocoder
 from .enums import ALL_CITY_NAMES
+from .time import SunTime
 from datetime import date, datetime, timedelta
 import pytz
 
@@ -25,21 +26,12 @@ class SunSetter(object):
 		:return str: city name or None
 		"""
 		if not time:
-			# TODO: make sure to calclulate the NEXT sunset
 			time = datetime.now(pytz.UTC)
 
 		short_time = None
 		short_cities = []
 		for city, data in self.cities.iteritems():
-			delt = data['sunset']-time
-			if short_time == None:
-				short_time = delt
-
-			if delt < short_time:
-				short_time = delt
-				short_cities = [city]
-			elif delt == short_time:
-				short_cities.append(city)
+			pass
 
 		print short_cities
 		print "in %s" % short_time
@@ -58,12 +50,12 @@ class SunSetter(object):
 					c = self.geo[city]
 					s = c.sun(date=self.date, local=False)
 
-					city_dict = {
-						"sunset": s['sunset'],
-						"sunrise": s['sunrise']
+					city_time_dict = {
+						'sunrise': SunTime.get_suntime_from_time(s['sunrise']),
+						'sunset': SunTime.get_suntime_from_time(s['sunset'])
 					}
 
-					self.cities[city] = city_dict
+					self.cities[city] = city_time_dict
 
 				except KeyError:
 					print "NO - %s" % city
