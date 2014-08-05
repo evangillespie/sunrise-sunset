@@ -79,10 +79,10 @@ class FileGeocoder(object):
             for key, value in self.data.iteritems():
                 try:
                     val = pickle.dumps(value)
-                    val = val.encode('utf8')
+                    val = val.encode('latin-1')
                     pickles[key] = val
                 except UnicodeDecodeError:
                     # just ignore a city if you can't decode it
                     print "Can't decode %s" % key
 
-            json.dump(pickles, f, sort_keys=True, indent=2, ensure_ascii=False, encoding='utf-8')
+            json.dump(pickles, f, sort_keys=True, indent=2, ensure_ascii=False, encoding='latin-1')
