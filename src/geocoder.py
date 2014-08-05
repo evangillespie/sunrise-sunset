@@ -49,9 +49,12 @@ class FileGeocoder(object):
         """
         look up a location on google and save it to the file
         """
-        loc = self.google[key]
+        if key not in self.data:
+            loc = self.google[key]
 
-        self._save_location(key, loc)
+            self._save_location(key, loc)
+        else:
+            print "Already save %s in the file" % key
 
     def _save_location(self, key, location):
         """

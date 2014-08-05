@@ -1,6 +1,6 @@
 # !/bin/
 
-from src.enums import FILE_GEOCODER_PATH, ALL_CITY_NAMES
+from src.enums import FILE_GEOCODER_PATH, ALL_CITY_NAMES, SOME_CITY_NAMES
 from src.geocoder import FileGeocoder
 from src.exceptions import LocationNotFoundError
 from astral import AstralError
@@ -17,10 +17,12 @@ def populate_file_geocoder():
     """
     file_geo = FileGeocoder()
     try:
-        for region, cities in ALL_CITY_NAMES.iteritems():
+        for region, cities in SOME_CITY_NAMES.iteritems():
+        # for region, cities in ALL_CITY_NAMES.iteritems():
             for city in cities:
                 try:
                     file_geo.new_location(city)
+                    sleep(0.1)
                 except LocationNotFoundError:
                     print "CANT FIND CITY: %s" % city
 
@@ -28,6 +30,8 @@ def populate_file_geocoder():
         
     except AstralError as e:
         print "ASTRAL ERROR: %s" % e
+        print "maybe cant access google maps api"
+        file_geo.commit_to_file()
 
 def run_loop(interval=60):
     """
