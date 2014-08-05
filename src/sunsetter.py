@@ -12,7 +12,6 @@ class SunSetter(object):
 
 		self.geo = FileGeocoder()
 		self.cities = dict()
-		# TODO: make sure to calclulate the NEXT sunset
 		self.date = datetime.now(pytz.UTC)	# date to find sunrise/sunset for
 		
 		self._prime()
@@ -21,16 +20,18 @@ class SunSetter(object):
 		"""
 		get the name of a major city where the sun is setting at a given time
 
-		:param time: time of the sunset
+		:param time: (SunTime) time of the sunset
 
 		:return str: city name or None
 		"""
 		if not time:
-			time = datetime.now(pytz.UTC)
+			time = SunTime.get_suntime_from_time(datetime.now(pytz.UTC))
 
 		short_time = None
 		short_cities = []
 		for city, data in self.cities.iteritems():
+			# TODO: compare all cities and find the next sunset
+			# TODO: time the comparison. Do we need to be more clever than brute force?
 			pass
 
 		print short_cities

@@ -1,35 +1,34 @@
 from datetime import date, datetime, timedelta
 import pytz
 
-class SunTime(object):
+class SunTime():
 	"""
 	class to deal with times as strings instead of time object
 	"""
 
-	def __init__(self, h, m, s):
+	def __init__(self, time, **kwargs):
 		"""
-		:param h: the hour in 24 hour format
-		:param m: minutes past the hour
-		:param s: seconds past the minute
+		:param time: datetime.time object to use as our time
 		"""
-		# TODO: consider using time.time instead of integers
-		self.h = h
-		self.m = m
-		self.s = s
+		self.time = time
+
+	def __repr__(self):
+		return str(self.time)
+
+	def __str__(self):
+		return self.__repr__()
 
 	@classmethod
-	def get_suntime_from_time(cls, time):
+	def get_suntime_from_time(cls, orig_datetime):
 		"""
 		turn a time into a SunTime object
 
-		:param time: time object to map
+		:param orig_datetime: datetime.datetime object to map
 
 		:return SunTime: Suntime equivalent
 		"""
-		print "+++++++++++++++++"
-		print time
-		print time.__class__
-		print "+++++++++++++++++"
+		suntime = cls(time=orig_datetime.time())
+		return suntime
 
 	def get_time_difference(self, other_time):
 		"""
