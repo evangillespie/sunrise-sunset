@@ -26,6 +26,7 @@ class FileGeocoder(object):
             for key, loc_pic in json_data.iteritems():
                 self.data[key] = pickle.loads(loc_pic)
 
+
     def __getitem__(self, key):
         """
         return a location object for the key
@@ -50,11 +51,11 @@ class FileGeocoder(object):
         look up a location on google and save it to the file
         """
         if key not in self.data:
+            print "Adding %s" % key
             loc = self.google[key]
-
             self._save_location(key, loc)
         else:
-            print "Already save %s in the file" % key
+            print "Already have %s" % key
 
     def _save_location(self, key, location):
         """
@@ -63,9 +64,7 @@ class FileGeocoder(object):
         :param location: location object to save
         """
         try:
-            val = pickle.dumps(location)
-            val = val.encode('utf8')
-            self.data[key] = val
+            self.data[key] = location
         except UnicodeDecodeError:
             print "===="
             print "cant deal with: %s" % key
@@ -76,4 +75,14 @@ class FileGeocoder(object):
         commit all the pending changes to the file
         """   
         with open(self.file_path, "w") as f:
-            json.dump(self.data, f, sort_keys=True, indent=2)
+            pickles = dict()
+            for key, value in self.data.iteritems():
+                try:
+                    val = pickle.dumps(value)
+                    val = val.encode('utf8')
+                    pickles[key] = val
+                except UnicodeDecodeError:
+                    # just ignore a city if you can't decode it
+                    print "Can't decode %s" % key
+
+            json.dump(pickles, f, sort_keys=True, indent=2, ensure_ascii=False, encoding='utf-8')

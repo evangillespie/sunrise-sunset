@@ -2,28 +2,29 @@
 
 import os
 
+# Path to the file to store all the locations in for offline use
 FILE_GEOCODER_PATH = os.path.dirname(os.path.realpath(__file__))+'/../assets/locations.json'
 
+# Smaller list of cities for testing purposes
 SOME_CITY_NAMES = {
-	'THEM': [
+	'CITIES': [
 		'Calgary',
 		'Berlin',
 		'Tokyo',
+		'London'
 	]
 }
 
+# List of all cities to calculate the sunset for
 ALL_CITY_NAMES = {
 	'AFRICA': [
 		'Accra',
-		'Luanda',
 		'Dakar',
 		'Pretoria',
 		'Tripoli',
-		'Harare',
 		'Abuja',
 		'Kampala',
 		'Bamako',
-		'Maputo',
 		'Rabat',
 		'Antananarivo',
 		'Ouagadougou',
@@ -46,7 +47,6 @@ ALL_CITY_NAMES = {
 		'Mombasa',
 		'Nairobi',
 		'Kigali',
-		'Juba',
 		'Entebbe',
 	#Horn of Africa
 		'Djibouti City',
@@ -101,7 +101,7 @@ ALL_CITY_NAMES = {
 		'Quebec City',
 		'Regina',
 		'Saskatoon',
-		'St. John\'s', 
+		'St. John\'s',
 		'Toronto',
 		'Vancouver',
 		'Victoria',
@@ -144,8 +144,8 @@ ALL_CITY_NAMES = {
 		'Pittsburgh',
 		'Portland',
 		'Raleigh',
-		'Reno',	
-		'Sacramento',	
+		'Reno',
+		'Sacramento',
 		'Salt Lake City',
 		'San Diego',
 		'San Francisco',
@@ -202,8 +202,8 @@ ALL_CITY_NAMES = {
 		'Montevideo',
 		'Caracas',
 		'Maracaibo'
-		],
-		'ASIA': [
+	],
+	'ASIA': [
 	#Central Asia
 		'Almaty',
 		'Astana',
@@ -241,7 +241,7 @@ ALL_CITY_NAMES = {
 		'Dhaka',
 		'Sylhet',
 		'Bangalore',
-		'Delhi'
+		'Delhi',
 		'Mumbai',
 		'Kathmandu',
 		'Islamabad',
@@ -272,13 +272,13 @@ ALL_CITY_NAMES = {
 		'Kandahar',
 		'Shiraz',
 		'Birjand',
-		'Tehran'
+		'Tehran',
 		'Isfahan',
 		'Baghdad',
 		'Basra',
 		'Tel Aviv',
 		'Aqaba',
-		'Kuwait City'
+		'Kuwait City',
 		'Beirut',
 		'Muscat',
 		'Doha',
@@ -436,9 +436,7 @@ ALL_CITY_NAMES = {
 		'Kerry',
 		'Knock',
 		'Shannon',
-
 		'Isle of Man',
-
 		#Italy
 		'Alghero',
 		'Ancona',
@@ -646,7 +644,6 @@ ALL_CITY_NAMES = {
 		'Melbourne',
 		'Perth',
 		'Sydney',
-
 		#New Zealand
 		'Auckland',
 		'Christchurch',
@@ -655,7 +652,6 @@ ALL_CITY_NAMES = {
 		'Queenstown',
 		'Rotorua',
 		'Wellington',
-
 		#Islands
 		'Christmas Island',
 		'Keeling',

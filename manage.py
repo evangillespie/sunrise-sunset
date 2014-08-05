@@ -17,14 +17,15 @@ def populate_file_geocoder():
     """
     file_geo = FileGeocoder()
     try:
-        for region, cities in SOME_CITY_NAMES.iteritems():
-        # for region, cities in ALL_CITY_NAMES.iteritems():
+        for region, cities in ALL_CITY_NAMES.iteritems():
             for city in cities:
                 try:
                     file_geo.new_location(city)
                     sleep(0.1)
                 except LocationNotFoundError:
                     print "CANT FIND CITY: %s" % city
+                except ValueError as e:
+                    print "%s" % e
 
         file_geo.commit_to_file()
         
