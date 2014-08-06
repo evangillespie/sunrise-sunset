@@ -62,9 +62,11 @@ def show_all_times(rise_or_set):
         print "invalid rise_or_set: %s" % rise_or_set
         return
 
+    s = SunSetter()
+
+    print "Current time is %s" % s.get_current_time()
     print "Showing the time for all %ss" % rise_or_set
     # TODO: implement
-    s = SunSetter()
     times = s.get_all_times()
     for city, times in times.iteritems():
         print "%s\t%s" % (city, times[rise_or_set])

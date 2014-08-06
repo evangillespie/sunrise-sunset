@@ -25,8 +25,7 @@ class SunSetter(object):
 		:return str: city name or None
 		"""
 		if not time:
-			time = SunTime.get_suntime_from_time(datetime.now(pytz.UTC))
-
+			time = self.get_current_time()
 		short_time = None
 		short_cities = []
 		for city, data in self.cities.iteritems():
@@ -42,6 +41,12 @@ class SunSetter(object):
 		return all the sunset/sunrise times
 		"""
 		return self.cities
+
+	def get_current_time(self):
+		"""
+		return the current time, as seen by this class
+		"""
+		return SunTime.get_suntime_from_time(datetime.now(pytz.UTC))
 
 	def _prime(self):
 		"""
