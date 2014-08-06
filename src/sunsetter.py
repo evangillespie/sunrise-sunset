@@ -37,6 +37,11 @@ class SunSetter(object):
 		print short_cities
 		print "in %s" % short_time
 			
+	def get_all_times(self):
+		"""
+		return all the sunset/sunrise times
+		"""
+		return self.cities
 
 	def _prime(self):
 		"""
