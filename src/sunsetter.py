@@ -16,25 +16,25 @@ class SunSetter(object):
 		
 		self._prime()
 
-	def find_sunset_at_time(self, time=None):
+	def find_sunsets_at_time(self, interval, time=None):
 		"""
 		get the name of a major city where the sun is setting at a given time
 
+		:param interval: maximum time difference in seconds from time.
 		:param time: (SunTime) time of the sunset
 
-		:return str: city name or None
+		:return str: list of cities where sunset will happen in less than interval seconds from time
 		"""
 		if not time:
 			time = self.get_current_time()
-		short_time = None
+
 		short_cities = []
 		for city, data in self.cities.iteritems():
 			# TODO: compare all cities and find the next sunset
 			# TODO: time the comparison. Do we need to be more clever than brute force?
 			pass
 
-		print short_cities
-		print "in %s" % short_time
+		return short_cities
 			
 	def get_all_times(self):
 		"""

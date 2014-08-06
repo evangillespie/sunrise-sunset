@@ -41,9 +41,9 @@ def run_loop(interval=60):
     
     :param interval: number of seconds between each check
     """
+    s = SunSetter()
     while True:
-        # TODO: implement properly
-        print "in the loop. Implement me properly"
+        print s.find_sunsets_at_time(interval=interval)
         sleep(interval)
 
 def show_all_times(rise_or_set):
@@ -66,7 +66,6 @@ def show_all_times(rise_or_set):
 
     print "Current time is %s" % s.get_current_time()
     print "Showing the time for all %ss" % rise_or_set
-    # TODO: implement
     times = s.get_all_times()
     for city, times in times.iteritems():
         print "%s\t%s" % (city, times[rise_or_set])
@@ -84,7 +83,11 @@ if __name__ == '__main__':
         if command == 'store_locations':
             populate_file_geocoder()
         elif command == 'run':
-            run_loop()
+            if len(argv) == 3:
+                interval=int(argv[2])
+                run_loop(interval=interval)
+            else:
+                run_loop()
         elif command == 'times':
             if len(argv) < 3:
                 print "You're missing the sunrise/sunset param"
