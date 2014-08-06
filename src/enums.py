@@ -178,7 +178,7 @@ ALL_CITY_NAMES = {
 		'Santa Clara',
 		'San Juan',
 		'Santiago de los Caballeros',
-		'San José de Costa Rica',
+		'San Jose de Costa Rica',
 		'San Salvador',
 		'Grenada',
 		'Port-au-Prince',
