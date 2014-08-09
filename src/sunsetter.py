@@ -16,7 +16,7 @@ class SunSetter(object):
 		
 		self._prime()
 
-	def find_sunsets_at_time(self, interval, time=None):
+	def find_rise_or_set_at_time(self, interval, rise_or_set=None, time=None):
 		"""
 		get the name of a major city where the sun is setting at a given time
 
@@ -27,12 +27,16 @@ class SunSetter(object):
 		"""
 		if not time:
 			time = self.get_current_time()
+		if not rise_or_set:
+			raise Exception("need a rise_or_set")
+		if rise_or_set != 'sunrise' and rise_or_set != 'sunset':
+			raise Exception("rise_or_set must be either 'sunrise' or 'sunset', not %s" % rise_or_set)
 
 		short_cities = []
 		for city, data in self.cities.iteritems():
-			# TODO: compare all cities and find the next sunset
-			# TODO: time the comparison. Do we need to be more clever than brute force?
-			pass
+			diff = time.get_time_difference(data[rise_or_set])
+			if diff <= interval and diff >= 0:
+				short_cities.append(city)
 
 		return short_cities
 			

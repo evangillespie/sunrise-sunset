@@ -43,7 +43,15 @@ def run_loop(interval=60):
     """
     s = SunSetter()
     while True:
-        print s.find_sunsets_at_time(interval=interval)
+        sunsets = s.find_rise_or_set_at_time(
+            interval=interval,
+            rise_or_set='sunset'
+        )
+        sunrises = s.find_rise_or_set_at_time(
+            interval=interval,
+            rise_or_set='sunrise'
+        )
+        print "Sunrises: %s\nSunsets: %s" % (sunrises, sunsets)
         sleep(interval)
 
 def show_all_times(rise_or_set):

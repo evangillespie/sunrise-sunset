@@ -38,5 +38,10 @@ class SunTime(object):
 
 		:return int: seconds to other_time. negative return means that other_time is before self
 		"""
-		# TODO: create this method
-		pass
+		# XXX: HACK! maybe do this properly
+		diff_h = other_time.time.hour - self.time.hour
+		diff_m = other_time.time.minute - self.time.minute
+		diff_s = other_time.time.second - self.time.second
+		seconds_to_other_time = diff_h*60*60 + diff_m*60 + diff_s
+
+		return seconds_to_other_time
