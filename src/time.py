@@ -1,7 +1,7 @@
 from datetime import date, datetime, timedelta
 import pytz
 
-class SunTime():
+class SunTime(object):
 	"""
 	class to deal with times as strings instead of time object
 	"""
