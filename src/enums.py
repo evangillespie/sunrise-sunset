@@ -670,7 +670,6 @@ ALL_CITY_NAMES = {
 		'Akureyri',
 		'Reykjavik',
 		'Kopavogur',
-		'Hafnarfjorour',
 		'Akureyri',
 		'Akranes',
 		'Selfoss',
