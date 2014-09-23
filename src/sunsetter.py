@@ -1,6 +1,6 @@
 from .geocoder import FileGeocoder
 from .enums import ALL_CITY_NAMES
-from .time import SunTime
+from .suntime import SunTime
 from datetime import date, datetime, timedelta
 import pytz
 

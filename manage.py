@@ -4,10 +4,13 @@ from src.sunsetter import SunSetter
 from src.enums import FILE_GEOCODER_PATH, ALL_CITY_NAMES, SOME_CITY_NAMES
 from src.geocoder import FileGeocoder
 from src.exceptions import LocationNotFoundError
+from src.gui import Gui
 from astral import AstralError
 from optparse import OptionParser
 from sys import argv
 from time import sleep
+import Tkinter as tk
+from random import randrange
 
 __author__ = ('evan', )
 
@@ -54,6 +57,23 @@ def run_loop(interval=60):
         print "Sunrises: %s\nSunsets: %s" % (sunrises, sunsets)
         sleep(interval)
 
+def run_gui_loop(interval=60, rise_or_set="sunrise"):
+    """
+    run an infinite loop and display the closest sunset and sunrise every <interval> seconds
+    BUT DO IT IN A GUI. Wooo.
+
+    :param interval: number of seconds between each check
+    """
+    root = tk.Tk()
+
+    gui = Gui(root)
+
+    while True:
+        # TODO: get a real city to display
+        sleep(1) 
+        gui.update_city("Calgary %s" % randrange(100))
+
+
 def show_all_times(rise_or_set):
     """
     show time sunrise or sunset time for every city
@@ -82,7 +102,8 @@ def print_help():
     print "USAGE: %s <command>" % argv[0]
     print "COMMANDS:"
     print "store_locations: save all locations for offline use"
-    print "run: run the infinite looping program"
+    print "run_cli: run the infinite looping program"
+    print "run_gui <interval> <sunrise/sunset>: run the infinite loop with a gui"
     print "times: show a list of all sunset or sunrise times"
 
 if __name__ == '__main__':
@@ -90,12 +111,18 @@ if __name__ == '__main__':
         command = argv[1]
         if command == 'store_locations':
             populate_file_geocoder()
-        elif command == 'run':
+        elif command == 'run_cli':
             if len(argv) == 3:
                 interval=int(argv[2])
                 run_loop(interval=interval)
             else:
                 run_loop()
+        elif command == 'run_gui':
+            if len(argv) == 3:
+                interval=int(argv[2])
+            else:
+                interval=60
+                run_gui_loop(interval=interval)
         elif command == 'times':
             if len(argv) < 3:
                 print "You're missing the sunrise/sunset param"
