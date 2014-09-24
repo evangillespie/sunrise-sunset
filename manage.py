@@ -52,18 +52,18 @@ def run_loop(rise_or_set='sunrise', interval=60):
             rise_or_set=rise_or_set
         )
 
-        _print_city(cities)
+        _print_city(rise_or_set, cities)
         sleep(interval)
 
-def _print_city(cities):
+def _print_city(rise_or_set, cities):
     if cities:
         # pick a random city from the list
         city = random.choice(cities)
-        print "\n\n\n\n\nSunrise\r"
+        print "\n\n\n\n\n"+rise_or_set.capitalize()+"\r"
         print city
     else:
         # there are no cities right now
-        print "\n\n\n\n\nSunrise\r\n"
+        print "\n\n\n\n\n"+rise_or_set.capitalize()+"\r\n"
 
 
 def run_gui_loop(interval=60, rise_or_set="sunrise"):
