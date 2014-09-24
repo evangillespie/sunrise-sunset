@@ -63,7 +63,7 @@ def _print_city(cities):
         print city
     else:
         # there are no cities right now
-        print "\n\n\n\n\nSunrise\n\n\r"
+        print "\n\n\n\n\nSunrise\r\n"
 
 
 def run_gui_loop(interval=60, rise_or_set="sunrise"):
