@@ -59,9 +59,8 @@ def _print_city(cities):
     if cities:
         # pick a random city from the list
         city = random.choice(cities)
-        print "-------"
+        print "\n\nSunrise\n\r"
         print city
-        print "-------"
     else:
         # there are no cities right now
         print "--"
