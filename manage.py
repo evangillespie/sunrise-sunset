@@ -59,11 +59,11 @@ def _print_city(cities):
     if cities:
         # pick a random city from the list
         city = random.choice(cities)
-        print "\n\n\nSunrise\r"
+        print "\n\n\n\n\nSunrise\r"
         print city
     else:
         # there are no cities right now
-        print "\n\n\nSunrise\n\r"
+        print "\n\n\n\n\nSunrise\n\n\r"
 
 
 def run_gui_loop(interval=60, rise_or_set="sunrise"):
