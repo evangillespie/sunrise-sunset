@@ -10,7 +10,8 @@ from optparse import OptionParser
 from sys import argv
 from time import sleep
 import Tkinter as tk
-from random import randrange
+import random
+import sys
 
 __author__ = ('evan', )
 
@@ -38,7 +39,7 @@ def populate_file_geocoder():
         print "maybe cant access google maps api"
         file_geo.commit_to_file()
 
-def run_loop(interval=60):
+def run_loop(rise_or_set='sunrise', interval=60):
     """
     run an infinite loop and display the closest sunset and sunrise every <interval> seconds
     
@@ -46,16 +47,25 @@ def run_loop(interval=60):
     """
     s = SunSetter()
     while True:
-        sunsets = s.find_rise_or_set_at_time(
+        cities = s.find_rise_or_set_at_time(
             interval=interval,
-            rise_or_set='sunset'
+            rise_or_set=rise_or_set
         )
-        sunrises = s.find_rise_or_set_at_time(
-            interval=interval,
-            rise_or_set='sunrise'
-        )
-        print "Sunrises: %s\nSunsets: %s" % (sunrises, sunsets)
+
+        _print_city(cities)
         sleep(interval)
+
+def _print_city(cities):
+    if cities:
+        # pick a random city from the list
+        city = random.choice(cities)
+        print "-------"
+        print city
+        print "-------"
+    else:
+        # there are no cities right now
+        print "--"
+
 
 def run_gui_loop(interval=60, rise_or_set="sunrise"):
     """
@@ -71,7 +81,7 @@ def run_gui_loop(interval=60, rise_or_set="sunrise"):
     while True:
         # TODO: get a real city to display
         sleep(1) 
-        gui.update_city("Calgary %s" % randrange(100))
+        gui.update_city("Calgary %s" % random.randrange(100))
 
 
 def show_all_times(rise_or_set):
@@ -102,7 +112,7 @@ def print_help():
     print "USAGE: %s <command>" % argv[0]
     print "COMMANDS:"
     print "store_locations: save all locations for offline use"
-    print "run_cli: run the infinite looping program"
+    print "run <sunrise/sunset> <interval=60>: run the infinite looping program"
     print "run_gui <interval> <sunrise/sunset>: run the infinite loop with a gui"
     print "times: show a list of all sunset or sunrise times"
 
@@ -111,12 +121,24 @@ if __name__ == '__main__':
         command = argv[1]
         if command == 'store_locations':
             populate_file_geocoder()
-        elif command == 'run_cli':
-            if len(argv) == 3:
-                interval=int(argv[2])
-                run_loop(interval=interval)
+        elif command == 'run':
+            if len(argv) >= 3:
+                rise_or_set=argv[2]
+                if rise_or_set != 'sunrise' and rise_or_set != 'sunset':
+                    print "you trying to get a sunrise or sunset?"
+                    print_help()
+                    sys.exit()
+                if len(argv) == 4:
+                    interval = int(argv[3])
+                else:
+                    interval = 60
+
+                run_loop(rise_or_set, interval)
+
             else:
-                run_loop()
+                print_help()
+                    
+            
         elif command == 'run_gui':
             if len(argv) == 3:
                 interval=int(argv[2])
