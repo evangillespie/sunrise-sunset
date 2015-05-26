@@ -93,8 +93,7 @@ void reset_all() {
 }
 
 
-
- void changeLetters(char new_values[]){
+void changeLetters(char new_values[]){
   /*
    * change all characters to new values
    */
