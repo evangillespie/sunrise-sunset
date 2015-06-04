@@ -103,7 +103,36 @@ void changeLetters(char new_values[]){
     number_of_changes[i] = getNumLetterChanges(current_chars[i], new_values[i]);
   }
 
+  int num_steps = 0;
+  bool change_complete = false;
+  while (change_complete == false) {
+    num_steps += 1;
+    change_complete = false;
 
+    for (int i = 0; i < NUMBER_OF_CHARS; i++){
+      if (number_of_changes[i] > 0){
+        //move the motor one step
+        change_complete = true;
+        digitalWrite(motor_pins[i], HIGH);
+      }
+    }
+    delay(100); // this is too long
+    for (int i = 0; i < NUMBER_OF_CHARS; i++){
+      if (number_of_changes[i] > 0){
+        //move the motor one step
+        digitalWrite(motor_pins[i], LOW);
+      }
+    }
+
+    // reset the number of changes remaining
+    if (num_steps == 4) {
+      for (int i = 0; i < NUMBER_OF_CHARS; i++){
+        if (number_of_changes[i] > 0){
+          number_of_changes[i] -= 1;
+        }
+      }
+    }
+  }
 
   for(int i = 0; i < NUMBER_OF_CHARS; i++){
     current_chars[i] = new_values[i];
