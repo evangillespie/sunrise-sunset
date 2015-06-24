@@ -8,6 +8,7 @@ const int reset_button_pin = 0;
 
 #define MOTOR_STEPS_PER_LETTER = 12;
 char current_chars[NUMBER_OF_CHARS];
+char new_values[NUMBER_OF_CHARS];
 const char sign_character_map[] = {
     ' ', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 
     'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
@@ -35,10 +36,12 @@ void setup() {
 void loop() {
   if (digitalRead(reset_button_pin) == HIGH) {
     reset_all();
+    // clear the incoming serial buffer
+    while(Serial.available())
+      Serial.read();
   }
 
   if (Serial.available() >= NUMBER_OF_CHARS) {
-    char new_values[NUMBER_OF_CHARS];
     for(int i=0; i < NUMBER_OF_CHARS; i++){
       new_values[i] = Serial.read();
     }
@@ -51,7 +54,7 @@ void loop() {
 
 void reset_all() {
   /*
-   *  reset the all the letter to the space character
+   *  reset all the letters to the space character
   */ 
 
   int pin_delay = 5;
@@ -125,7 +128,7 @@ void changeLetters(char new_values[]){
     }
 
     // reset the number of changes remaining
-    if (num_steps == 4) {
+    if (num_steps % 4 == 0) {
       for (int i = 0; i < NUMBER_OF_CHARS; i++){
         if (number_of_changes[i] > 0){
           number_of_changes[i] -= 1;
