@@ -4,7 +4,7 @@
 #define NUMBER_OF_CHARS 2
 const int motor_pins[] = {2, 3};
 const int full_flip_sensor_pins[] = {9, 10};
-const int reset_button_pin = 0;
+const int reset_button_pin = 4;
 
 #define MOTOR_STEPS_PER_LETTER = 12;
 char current_chars[NUMBER_OF_CHARS];
@@ -45,7 +45,6 @@ void loop() {
     for(int i=0; i < NUMBER_OF_CHARS; i++){
       new_values[i] = Serial.read();
     }
-    Serial.println(new_values);
     changeLetters(new_values);
   }
 
@@ -107,28 +106,29 @@ void changeLetters(char new_values[]){
   }
 
   int num_steps = 0;
-  bool change_complete = false;
+  bool change_complete;
   while (change_complete == false) {
     num_steps += 1;
-    change_complete = false;
+    change_complete = true;
 
     for (int i = 0; i < NUMBER_OF_CHARS; i++){
       if (number_of_changes[i] > 0){
         //move the motor one step
-        change_complete = true;
+        change_complete = false;
         digitalWrite(motor_pins[i], HIGH);
       }
     }
-    delay(100); // this is too long
+    delay(5); // this is too long
     for (int i = 0; i < NUMBER_OF_CHARS; i++){
       if (number_of_changes[i] > 0){
         //move the motor one step
         digitalWrite(motor_pins[i], LOW);
       }
     }
+    delay(5);
 
     // reset the number of changes remaining
-    if (num_steps % 4 == 0) {
+    if (num_steps % 12 == 0) {
       for (int i = 0; i < NUMBER_OF_CHARS; i++){
         if (number_of_changes[i] > 0){
           number_of_changes[i] -= 1;
