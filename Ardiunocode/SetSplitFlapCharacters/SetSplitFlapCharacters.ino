@@ -162,18 +162,15 @@ int getNumLetterChanges(char src_letter, char dst_letter) {
 }
 
 
-// @TODO: test: HOW MANY TIMES DOES THIS EXECUTE?
-// @TODO: test: HOW LONG DOES THIS TAKE?
 int getNumberForLetter(char letter){
   /*
    * Find the number that corresponds to a particular character in the split flap
    */
-   
-  // XXX: is there a faster way to do this?
   for(int i = 0; i < sizeof(sign_character_map); i++){
     if (sign_character_map[i] == letter){
       return i;
     }
   }
+
   return 0;
 }
