@@ -15,6 +15,7 @@ const char sign_character_map[] = {
     'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
     '?', '?', '?', '-', '.', '(', ')', '!', ':', '/', '"', ',', '=', '?', '@'
 };
+int pin_delay = 4;
 
 
 void setup() {
@@ -56,7 +57,6 @@ void reset_all() {
    *  reset all the letters to the space character
   */ 
 
-  int pin_delay = 5;
   int sensor_counter = 0;
 
   // move all characters off the space char
@@ -118,14 +118,14 @@ void changeLetters(char new_values[]){
         digitalWrite(motor_pins[i], HIGH);
       }
     }
-    delay(5); // this is too long
+    delay(pin_delay);
     for (int i = 0; i < NUMBER_OF_CHARS; i++){
       if (number_of_changes[i] > 0){
         //move the motor one step
         digitalWrite(motor_pins[i], LOW);
       }
     }
-    delay(5);
+    delay(pin_delay);
 
     // reset the number of changes remaining
     if (num_steps % 12 == 0) {
