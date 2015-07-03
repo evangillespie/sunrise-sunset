@@ -1,10 +1,10 @@
 /* 
  * Move the split flap display to show the data that is received on serial
  */
-#define NUMBER_OF_CHARS 2
-const int motor_pins[] = {2, 3};
-const int full_flip_sensor_pins[] = {9, 10};
-const int reset_button_pin = 4;
+#define NUMBER_OF_CHARS 5
+const int motor_pins[] = {2, 3, 4, 5, 6};
+const int full_flip_sensor_pins[] = {8, 9, 10, 11, 12};
+const int reset_button_pin = 13;
 
 #define MOTOR_STEPS_PER_LETTER = 12;
 char current_chars[NUMBER_OF_CHARS];
@@ -38,8 +38,9 @@ void loop() {
   if (digitalRead(reset_button_pin) == HIGH) {
     reset_all();
     // clear the incoming serial buffer
-    while(Serial.available())
+    while(Serial.available()){
       Serial.read();
+    }
   }
 
   if (Serial.available() >= NUMBER_OF_CHARS) {
@@ -92,6 +93,11 @@ void reset_all() {
     }
     delay(pin_delay);
   }
+
+  // reset the current chars array
+  for (int i = 0; i < NUMBER_OF_CHARS; i++){
+    current_chars[i] = ' ';
+  }
 }
 
 
@@ -106,7 +112,7 @@ void changeLetters(char new_values[]){
   }
 
   int num_steps = 0;
-  bool change_complete;
+  bool change_complete = false;
   while (change_complete == false) {
     num_steps += 1;
     change_complete = true;
