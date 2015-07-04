@@ -4,7 +4,9 @@ from .exceptions import LocationNotFoundError
 import json
 import pickle
 
+
 class FileGeocoder(object):
+
     """
     a gerocoder that gets locations from the filesystem
     """
@@ -25,7 +27,6 @@ class FileGeocoder(object):
             json_data = json.load(f)
             for key, loc_pic in json_data.iteritems():
                 self.data[key] = pickle.loads(loc_pic)
-
 
     def __getitem__(self, key):
         """
@@ -73,7 +74,7 @@ class FileGeocoder(object):
     def commit_to_file(self):
         """
         commit all the pending changes to the file
-        """   
+        """
         with open(self.file_path, "w") as f:
             pickles = dict()
             for key, value in self.data.iteritems():
@@ -85,4 +86,5 @@ class FileGeocoder(object):
                     # just ignore a city if you can't decode it
                     print "Can't decode %s" % key
 
-            json.dump(pickles, f, sort_keys=True, indent=2, ensure_ascii=False, encoding='latin-1')
+            json.dump(pickles, f, sort_keys=True, indent=2,
+                      ensure_ascii=False, encoding='latin-1')

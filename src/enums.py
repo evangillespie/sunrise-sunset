@@ -2,9 +2,6 @@
 
 import os
 
-# Font size in the gui
-GUI_FONT_SIZE=60
-
 # Path to the file to store all the locations in for offline use
 FILE_GEOCODER_PATH = os.path.dirname(os.path.realpath(__file__))+'/../assets/locations.json'
 

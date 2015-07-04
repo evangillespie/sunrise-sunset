@@ -4,16 +4,14 @@ from src.sunsetter import SunSetter
 from src.enums import FILE_GEOCODER_PATH, ALL_CITY_NAMES, SOME_CITY_NAMES
 from src.geocoder import FileGeocoder
 from src.exceptions import LocationNotFoundError
-from src.gui import Gui
 from astral import AstralError
-from optparse import OptionParser
 from sys import argv
 from time import sleep
-import Tkinter as tk
 import random
 import sys
 
 __author__ = ('evan', )
+
 
 def populate_file_geocoder():
     """
@@ -33,16 +31,17 @@ def populate_file_geocoder():
                     print "%s" % e
 
         file_geo.commit_to_file()
-        
+
     except AstralError as e:
         print "ASTRAL ERROR: %s" % e
         print "maybe cant access google maps api"
         file_geo.commit_to_file()
 
-def run_loop(rise_or_set='sunrise', interval=60):
+
+def run_cli_loop(rise_or_set='sunrise', interval=60):
     """
     run an infinite loop and display the closest sunset and sunrise every <interval> seconds
-    
+
     :param interval: number of seconds between each check
     """
     s = SunSetter()
@@ -55,32 +54,15 @@ def run_loop(rise_or_set='sunrise', interval=60):
         _print_city(rise_or_set, cities)
         sleep(interval)
 
+
 def _print_city(rise_or_set, cities):
     if cities:
         # pick a random city from the list
         city = random.choice(cities)
-        print "\n\n\n\n\n"+rise_or_set.capitalize()+"\r"
         print city
     else:
         # there are no cities right now
-        print "\n\n\n\n\n"+rise_or_set.capitalize()+"\r\n"
-
-
-def run_gui_loop(interval=60, rise_or_set="sunrise"):
-    """
-    run an infinite loop and display the closest sunset and sunrise every <interval> seconds
-    BUT DO IT IN A GUI. Wooo.
-
-    :param interval: number of seconds between each check
-    """
-    root = tk.Tk()
-
-    gui = Gui(root)
-
-    while True:
-        # TODO: get a real city to display
-        sleep(1) 
-        gui.update_city("Calgary %s" % random.randrange(100))
+        print "-"
 
 
 def show_all_times(rise_or_set):
@@ -94,7 +76,7 @@ def show_all_times(rise_or_set):
         rise_or_set = 'sunrise'
     if rise_or_set == 'set':
         rise_or_set = 'sunset'
-        
+
     if rise_or_set != 'sunset' and rise_or_set != 'sunrise':
         print "invalid rise_or_set: %s" % rise_or_set
         return
@@ -107,12 +89,12 @@ def show_all_times(rise_or_set):
     for city, times in times.iteritems():
         print "%s\t%s" % (city, times[rise_or_set])
 
+
 def print_help():
     print "USAGE: %s <command>" % argv[0]
     print "COMMANDS:"
     print "store_locations: save all locations for offline use"
-    print "run <sunrise/sunset> <interval=60>: run the infinite looping program"
-    print "run_gui <interval> <sunrise/sunset>: run the infinite loop with a gui"
+    print "run_cli <sunrise/sunset> <interval=60>: run the infinite looping program"
     print "times: show a list of all sunset or sunrise times"
 
 if __name__ == '__main__':
@@ -120,9 +102,9 @@ if __name__ == '__main__':
         command = argv[1]
         if command == 'store_locations':
             populate_file_geocoder()
-        elif command == 'run':
+        elif command == 'run_cli':
             if len(argv) >= 3:
-                rise_or_set=argv[2]
+                rise_or_set = argv[2]
                 if rise_or_set != 'sunrise' and rise_or_set != 'sunset':
                     print "you trying to get a sunrise or sunset?"
                     print_help()
@@ -132,18 +114,11 @@ if __name__ == '__main__':
                 else:
                     interval = 60
 
-                run_loop(rise_or_set, interval)
+                run_cli_loop(rise_or_set, interval)
 
             else:
                 print_help()
-                    
-            
-        elif command == 'run_gui':
-            if len(argv) == 3:
-                interval=int(argv[2])
-            else:
-                interval=60
-                run_gui_loop(interval=interval)
+
         elif command == 'times':
             if len(argv) < 3:
                 print "You're missing the sunrise/sunset param"
