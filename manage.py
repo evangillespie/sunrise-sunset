@@ -41,7 +41,9 @@ def populate_file_geocoder():
 def run_cli_loop(rise_or_set='sunrise', interval=60):
     """
     run an infinite loop and display the closest sunset and sunrise every <interval> seconds
+    write to standard out
 
+    :rise_or_set: 'sunrise' or 'sunset' depending on which one you're looking to find
     :param interval: number of seconds between each check
     """
     s = SunSetter()
@@ -51,18 +53,51 @@ def run_cli_loop(rise_or_set='sunrise', interval=60):
             rise_or_set=rise_or_set
         )
 
-        _print_city(rise_or_set, cities)
+        if cities:
+            city = random.choice(cities)
+        else:
+            city = None
+
+        _print_city(rise_or_set, city)
+        sleep(interval)
+
+def run_split_flap_loop(rise_or_set='sunrise', interval=60):
+    """
+    run an infinite loop and display the closest sunset and sunrise every <interval> seconds
+    Send the output to an arduino (by serial) which controls a split flap display
+
+    :rise_or_set: 'sunrise' or 'sunset' depending on which one you're looking to find
+    :param interval: number of seconds between each check
+    """
+    num_letters = 5 #number of split flap letters that exist
+
+    s = SunSetter()
+    while True:
+        cities = s.find_rise_or_set_at_time(
+            interval=interval,
+            rise_or_set=rise_or_set
+        )
+        if cities:
+            city = random.choice(cities)
+        else:
+            city = ''
+
+        _send_city_by_serial(city[:num_letters].ljust(num_letters))
+        
         sleep(interval)
 
 
-def _print_city(rise_or_set, cities):
-    if cities:
+def _print_city(rise_or_set, city):
+    if city:
         # pick a random city from the list
-        city = random.choice(cities)
         print city
     else:
         # there are no cities right now
         print "-"
+
+
+def _send_city_by_serial(city):
+    print city
 
 
 def show_all_times(rise_or_set):
@@ -94,7 +129,8 @@ def print_help():
     print "USAGE: %s <command>" % argv[0]
     print "COMMANDS:"
     print "store_locations: save all locations for offline use"
-    print "run_cli <sunrise/sunset> <interval=60>: run the infinite looping program"
+    print "run_cli <sunrise/sunset> <interval=60>: run the infinite looping program on this computer"
+    print "run_split_flap <sunrise/sunset> <interval=60>: run the infinite looping program using the split flap display"
     print "times: show a list of all sunset or sunrise times"
 
 if __name__ == '__main__':
@@ -118,6 +154,24 @@ if __name__ == '__main__':
 
             else:
                 print_help()
+
+        elif command == 'run_split_flap':
+            if len(argv) >= 3:
+                rise_or_set = argv[2]
+                if rise_or_set != 'sunrise' and rise_or_set != 'sunset':
+                    print "you trying to get a sunrise or sunset?"
+                    print_help()
+                    sys.exit()
+                if len(argv) == 4:
+                    interval = int(argv[3])
+                else:
+                    interval = 60
+
+                run_split_flap_loop(rise_or_set, interval)
+
+            else:
+                print_help()
+
 
         elif command == 'times':
             if len(argv) < 3:
