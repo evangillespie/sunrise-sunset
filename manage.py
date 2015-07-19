@@ -69,7 +69,10 @@ def run_split_flap_loop(rise_or_set='sunrise', interval=60):
     :rise_or_set: 'sunrise' or 'sunset' depending on which one you're looking to find
     :param interval: number of seconds between each check
     """
+    import serial
+
     num_letters = 5 #number of split flap letters that exist
+    ser = serial.Serial('/dev/ttyACM0', 9600)
 
     s = SunSetter()
     while True:
@@ -82,7 +85,7 @@ def run_split_flap_loop(rise_or_set='sunrise', interval=60):
         else:
             city = ''
 
-        _send_city_by_serial(city[:num_letters].ljust(num_letters))
+        _send_city_by_serial(ser, city[:num_letters].ljust(num_letters))
         
         sleep(interval)
 
@@ -96,8 +99,14 @@ def _print_city(rise_or_set, city):
         print "-"
 
 
-def _send_city_by_serial(city):
-    print city
+def _send_city_by_serial(ser, city):
+    """
+    send the city name to the arduino via serial
+
+    :param ser: serial connection
+    :param city: city name (string)
+    """
+    ser.write(city)
 
 
 def show_all_times(rise_or_set):
