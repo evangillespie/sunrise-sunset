@@ -71,7 +71,7 @@ def run_split_flap_loop(rise_or_set='sunrise', interval=60):
     """
     import serial
 
-    SPLIT_FLAP_NUMBER_OF_CHARCTERS = 5 #number of split flap letters that exist
+    num_letters = SPLIT_FLAP_NUMBER_OF_CHARCTERS #number of split flap letters that exist
     # @TODO: try to connect on the other port if this conection fails
     ser = serial.Serial('/dev/ttyACM0', 9600)
 
