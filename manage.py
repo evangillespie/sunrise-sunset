@@ -1,7 +1,7 @@
 # !/bin/
 
 from src.sunsetter import SunSetter
-from src.enums import FILE_GEOCODER_PATH, ALL_CITY_NAMES, SOME_CITY_NAMES
+from src.enums import FILE_GEOCODER_PATH, ALL_CITY_NAMES, SPLIT_FLAP_NUMBER_OF_CHARCTERS
 from src.geocoder import FileGeocoder
 from src.exceptions import LocationNotFoundError
 from astral import AstralError
@@ -71,8 +71,7 @@ def run_split_flap_loop(rise_or_set='sunrise', interval=60):
     """
     import serial
 
-    # @ TODO: move into config
-    num_letters = 5 #number of split flap letters that exist
+    SPLIT_FLAP_NUMBER_OF_CHARCTERS = 5 #number of split flap letters that exist
     # @TODO: try to connect on the other port if this conection fails
     ser = serial.Serial('/dev/ttyACM0', 9600)
 
