@@ -87,6 +87,7 @@ def run_split_flap_loop(rise_or_set='sunrise', interval=60):
         else:
             city = ''
 
+        print city
         _send_city_by_serial(ser, city[:num_letters].ljust(num_letters))
         
         sleep(interval)
@@ -94,10 +95,8 @@ def run_split_flap_loop(rise_or_set='sunrise', interval=60):
 
 def _print_city(rise_or_set, city):
     if city:
-        # pick a random city from the list
         print city
     else:
-        # there are no cities right now
         print "-"
 
 
@@ -108,6 +107,7 @@ def _send_city_by_serial(ser, city):
     :param ser: serial connection
     :param city: city name (string)
     """
+    city = city.lower()
     ser.write(city)
 
 
