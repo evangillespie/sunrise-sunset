@@ -71,7 +71,9 @@ def run_split_flap_loop(rise_or_set='sunrise', interval=60):
     """
     import serial
 
+    # @ TODO: move into config
     num_letters = 5 #number of split flap letters that exist
+    # @TODO: try to connect on the other port if this conection fails
     ser = serial.Serial('/dev/ttyACM0', 9600)
 
     s = SunSetter()
