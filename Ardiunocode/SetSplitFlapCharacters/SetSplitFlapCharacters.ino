@@ -1,10 +1,10 @@
 /* 
  * Move the split flap display to show the data that is received on serial
  */
-#define NUMBER_OF_CHARS 5
-const int motor_pins[] = {2, 3, 4, 5, 6};
-const int full_flip_sensor_pins[] = {8, 9, 10, 11, 12};
-const int reset_button_pin = 13;
+#define NUMBER_OF_CHARS 15
+const int motor_pins[] = {1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29};
+const int full_flip_sensor_pins[] = {0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28};
+const int reset_button_pin = 53;
 
 #define MOTOR_STEPS_PER_LETTER = 12;
 char current_chars[NUMBER_OF_CHARS];
