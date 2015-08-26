@@ -9,6 +9,7 @@ from sys import argv
 from time import sleep
 import random
 import sys
+import serial
 
 __author__ = ('evan', )
 
@@ -69,11 +70,8 @@ def run_split_flap_loop(rise_or_set='sunrise', interval=60):
     :rise_or_set: 'sunrise' or 'sunset' depending on which one you're looking to find
     :param interval: number of seconds between each check
     """
-    import serial
-
     num_letters = SPLIT_FLAP_NUMBER_OF_CHARCTERS #number of split flap letters that exist
-    # @TODO: try to connect on the other port if this conection fails
-    ser = serial.Serial('/dev/ttyACM0', 9600)
+    ser = _get_serial_connection()
 
     s = SunSetter()
     while True:
@@ -110,6 +108,14 @@ def _send_city_by_serial(ser, city):
     ser.write(city)
 
 
+def _get_serial_connection():
+    """
+    return a serial connection to the arduino
+    """
+    # @TODO: try to connect on the other port if this conection fails
+    return serial.Serial('/dev/ttyACM0', 9600)
+
+
 def show_all_times(rise_or_set):
     """
     show time sunrise or sunset time for every city
@@ -135,6 +141,34 @@ def show_all_times(rise_or_set):
         print "%s\t%s" % (city, times[rise_or_set])
 
 
+def load_test_split_flap(delay=5):
+    """
+    cycle through tonnes of cities on the split flap to load test it
+
+    :param delay: time to wait between city changes(seconds)
+    """
+    print "loading cities..."
+    s = SunSetter()
+    print "done loading cities"
+    cities = s.get_all_city_names()
+    ser = _get_serial_connection()
+    num_letters = SPLIT_FLAP_NUMBER_OF_CHARCTERS
+
+    counter = 1
+    while True:
+        try:
+            city = random.choice(cities)
+            print "%.3d: %s" % (counter, city)
+            _send_city_by_serial(ser, city[:num_letters].ljust(num_letters))
+
+            counter += 1
+            sleep(delay)
+        except KeyboardInterrupt:
+            break
+
+    print "Load test complete."
+
+
 def print_help():
     print "USAGE: %s <command>" % argv[0]
     print "COMMANDS:"
@@ -142,6 +176,7 @@ def print_help():
     print "run_cli <sunrise/sunset> <interval=60>: run the infinite looping program on this computer"
     print "run_split_flap <sunrise/sunset> <interval=60>: run the infinite looping program using the split flap display"
     print "times: show a list of all sunset or sunrise times"
+    print "load_test_split_flap: load test the split flap"
 
 if __name__ == '__main__':
     if len(argv) >= 2:
@@ -189,6 +224,10 @@ if __name__ == '__main__':
                 print "EG. python manage.py times sunrise"
             else:
                 show_all_times(argv[2])
+
+        elif command == 'load_test_split_flap':
+            load_test_split_flap()
+
         else:
             print_help()
     else:

@@ -51,6 +51,12 @@ class SunSetter(object):
         """
         return self.cities
 
+    def get_all_city_names(self):
+        """
+        return a list of all cities
+        """
+        return self.cities.keys()
+
     def get_current_time(self):
         """
         return the current time, as seen by this class
