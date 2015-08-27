@@ -1,7 +1,8 @@
 # !/bin/
 
 from src.sunsetter import SunSetter
-from src.enums import FILE_GEOCODER_PATH, ALL_CITY_NAMES, SPLIT_FLAP_NUMBER_OF_CHARCTERS
+from src.config import FILE_GEOCODER_PATH, SPLIT_FLAP_NUMBER_OF_CHARCTERS
+from src.enums import ALL_CITY_NAMES
 from src.geocoder import FileGeocoder
 from src.exceptions import LocationNotFoundError
 from astral import AstralError
