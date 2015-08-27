@@ -1,3 +1,5 @@
+import os
+
 # the number of characters in the split flap display
 SPLIT_FLAP_NUMBER_OF_CHARCTERS = 15
 

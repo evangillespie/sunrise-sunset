@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 
-import os
-
 # Smaller list of cities for testing purposes
 SOME_CITY_NAMES = {
 	'CITIES': [
