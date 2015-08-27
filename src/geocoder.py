@@ -56,7 +56,9 @@ class FileGeocoder(object):
             loc = self.google[key]
             self._save_location(key, loc)
         else:
-            print "Already have %s" % key
+            # print "Already have %s" % key
+            pass
+
 
     def _save_location(self, key, location):
         """
