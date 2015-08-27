@@ -2,9 +2,6 @@
 
 import os
 
-# the number of characters that exist in the split flap display
-SPLIT_FLAP_NUMBER_OF_CHARCTERS = 15
-
 # Path to the file to store all the locations in for offline use
 FILE_GEOCODER_PATH = os.path.dirname(os.path.realpath(__file__))+'/../assets/locations.json'
 
@@ -182,9 +179,12 @@ ALL_CITY_NAMES = {
 		'San Juan',
 	# Canada
 		'Calgary',
+		'Charlottetown',
 		'Edmonton',
+		'Fredericton',
 		'Halifax',
 		'Hamilton',
+		'Iqaluit',
 		'Kelowna',
 		'Moncton',
 		'Montreal',
@@ -196,7 +196,9 @@ ALL_CITY_NAMES = {
 		'Toronto',
 		'Vancouver',
 		'Victoria',
-		'Winnepeg',
+		'Whitehorse',
+		'Winnipeg',
+		'Yellowknife',
 	# United States
 		'Albany',
 		'Albuquerque',
