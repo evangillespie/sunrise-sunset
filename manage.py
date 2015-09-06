@@ -155,6 +155,7 @@ def load_test_split_flap(delay=15):
         """
         repeat a given string until it is as long as length
         """
+        string = string + " "
         return (string * ((length/len(string))+1))[:length]
 
     print "loading cities..."
@@ -171,9 +172,10 @@ def load_test_split_flap(delay=15):
     while True:
         try:
             city = random.choice(cities)
+            print "%.3d: %s" % (counter, city)
+            
             city = repeat_to_length(city, SPLIT_FLAP_NUMBER_OF_CHARCTERS)
 
-            print "%.3d: %s" % (counter, city)
             _send_city_by_serial(ser, city[:num_letters].ljust(num_letters))
 
             counter += 1
