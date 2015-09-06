@@ -1,5 +1,5 @@
 from astral import Location, GoogleGeocoder
-from .enums import FILE_GEOCODER_PATH
+from .config import FILE_GEOCODER_PATH
 from .exceptions import LocationNotFoundError
 import json
 import pickle
