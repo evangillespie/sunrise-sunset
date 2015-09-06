@@ -76,20 +76,23 @@ def run_split_flap_loop(rise_or_set='sunrise', interval=60):
 
     s = SunSetter()
     while True:
-        cities = s.find_rise_or_set_at_time(
-            interval=interval,
-            rise_or_set=rise_or_set
-        )
-        if cities:
-            city = random.choice(cities)
-        else:
-            city = ''
+        try:
+            cities = s.find_rise_or_set_at_time(
+                interval=interval,
+                rise_or_set=rise_or_set
+            )
+            if cities:
+                city = random.choice(cities)
+            else:
+                city = ''
 
-        print city
-        _send_city_by_serial(ser, city[:num_letters].ljust(num_letters))
-        
-        sleep(interval)
+            print city
+            _send_city_by_serial(ser, city[:num_letters].ljust(num_letters))
 
+            sleep(interval)
+        except KeyboardInterrupt:
+            break
+    print "Peace out."
 
 def _print_city(rise_or_set, city):
     if city:
@@ -148,8 +151,15 @@ def load_test_split_flap(delay=15):
 
     :param delay: time to wait between city changes(seconds)
     """
+    def repeat_to_length(string, length):
+        """
+        repeat a given string until it is as long as length
+        """
+        return (string * ((length/len(string))+1))[:length]
+
     print "loading cities..."
     s = SunSetter()
+    sleep(delay)
     print "done loading cities"
     cities = s.get_all_city_names()
     ser = _get_serial_connection()
@@ -159,6 +169,8 @@ def load_test_split_flap(delay=15):
     while True:
         try:
             city = random.choice(cities)
+            city = repeat_to_length(string, SPLIT_FLAP_NUMBER_OF_CHARCTERS)
+
             print "%.3d: %s" % (counter, city)
             _send_city_by_serial(ser, city[:num_letters].ljust(num_letters))
 
