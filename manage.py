@@ -165,7 +165,7 @@ def load_test_split_flap(delay=15):
     print "establishing connection"
 
     ser = _get_serial_connection()
-    sleep(delay)
+    sleep(5)
     num_letters = SPLIT_FLAP_NUMBER_OF_CHARCTERS
 
     counter = 1
