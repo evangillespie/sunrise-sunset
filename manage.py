@@ -169,7 +169,7 @@ def load_test_split_flap(delay=15):
     while True:
         try:
             city = random.choice(cities)
-            city = repeat_to_length(string, SPLIT_FLAP_NUMBER_OF_CHARCTERS)
+            city = repeat_to_length(city, SPLIT_FLAP_NUMBER_OF_CHARCTERS)
 
             print "%.3d: %s" % (counter, city)
             _send_city_by_serial(ser, city[:num_letters].ljust(num_letters))
