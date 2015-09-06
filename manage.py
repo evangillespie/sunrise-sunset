@@ -142,7 +142,7 @@ def show_all_times(rise_or_set):
         print "%s\t%s" % (city, times[rise_or_set])
 
 
-def load_test_split_flap(delay=5):
+def load_test_split_flap(delay=15):
     """
     cycle through tonnes of cities on the split flap to load test it
 
