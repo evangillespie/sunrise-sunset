@@ -15,7 +15,7 @@ const char sign_character_map[] = {
     'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
     '?', '?', '?', '-', '.', '(', ')', '!', ':', '/', '"', ',', '=', '?', '@'
 };
-int pin_delay = 4;
+int pin_delay = 5;
 
 
 void setup() {
