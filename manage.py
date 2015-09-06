@@ -159,10 +159,10 @@ def load_test_split_flap(delay=15):
 
     print "loading cities..."
     s = SunSetter()
-    sleep(delay)
     print "done loading cities"
     cities = s.get_all_city_names()
     ser = _get_serial_connection()
+    sleep(delay)
     num_letters = SPLIT_FLAP_NUMBER_OF_CHARCTERS
 
     counter = 1
