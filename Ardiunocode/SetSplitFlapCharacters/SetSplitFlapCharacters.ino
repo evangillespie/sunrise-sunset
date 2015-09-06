@@ -47,16 +47,21 @@ void loop() {
     for(int i=0; i < NUMBER_OF_CHARS; i++){
       new_values[i] = Serial.read();
     }
-    changeLetters(new_values);
+    if (is_blank(new_values) == true){
+      reset_all();
+    } else {
+      changeLetters(new_values);
+    }
   }
 
   delay(100);
 }
 
+
 void reset_all() {
   /*
    *  reset all the letters to the space character
-  */ 
+  */
 
   int sensor_counter = 0;
 
@@ -98,6 +103,19 @@ void reset_all() {
   for (int i = 0; i < NUMBER_OF_CHARS; i++){
     current_chars[i] = ' ';
   }
+}
+
+
+bool is_blank(char string[]){
+  /*
+   * Return true if the char array is all spaces
+   */
+   for (int i = 0; i < NUMBER_OF_CHARS; i++){
+      if (string[i] != ' '){
+        return false;
+      }
+   }
+   return true;
 }
 
 
