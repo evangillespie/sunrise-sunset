@@ -158,9 +158,11 @@ def load_test_split_flap(delay=15):
         return (string * ((length/len(string))+1))[:length]
 
     print "loading cities..."
-    s = SunSetter()
-    print "done loading cities"
-    cities = s.get_all_city_names()
+    cities = []
+    for city_list in ALL_CITY_NAMES.values():
+        cities += city_list
+    print "establishing connection"
+
     ser = _get_serial_connection()
     sleep(delay)
     num_letters = SPLIT_FLAP_NUMBER_OF_CHARCTERS
