@@ -55,12 +55,9 @@ def run_cli_loop(rise_or_set='sunrise', interval=60):
             rise_or_set=rise_or_set
         )
 
-        if cities:
-            city = random.choice(cities)
-        else:
-            city = None
+        city = s.pick_one_city(cities)
 
-        _print_city(rise_or_set, city)
+        _print_city(city)
         sleep(interval)
 
 def run_split_flap_loop(rise_or_set='sunrise', interval=60):
@@ -81,12 +78,9 @@ def run_split_flap_loop(rise_or_set='sunrise', interval=60):
                 interval=interval,
                 rise_or_set=rise_or_set
             )
-            if cities:
-                city = random.choice(cities)
-            else:
-                city = ''
+            city = s.pick_one_city(cities)
 
-            print city
+            _print_city(city)
             _send_city_by_serial(ser, city[:num_letters].ljust(num_letters))
 
             sleep(interval)
@@ -94,7 +88,7 @@ def run_split_flap_loop(rise_or_set='sunrise', interval=60):
             break
     print "Peace out."
 
-def _print_city(rise_or_set, city):
+def _print_city(city):
     if city:
         print city
     else:
@@ -186,6 +180,26 @@ def load_test_split_flap(delay=15):
     print "Load test complete."
 
 
+def simulate_24_hours(rise_or_set, time_to_simulate):
+    """
+    simulate a 24 hour period, finding a sunrise/sunset every minute
+
+    :param rise_or_set: 'sunrise' or 'sunset'
+    :param time_to_simulate: the length of the simulation (in hours)
+    """
+    if (rise_or_set != 'sunrise') and (rise_or_set != 'sunset'):
+        raise Exception("you need to specify 'sunrise' or 'sunset'")
+
+    time_interval = 60
+    s = SunSetter()
+
+    time = s.get_current_time()
+    for i in range(time_to_simulate * 60 * 60 / time_interval):  # one for each minute in the day
+        cities = s.find_rise_or_set_at_time(time_interval, rise_or_set, time)
+        _print_city(s.pick_one_city(cities))
+        
+        time.increment_time(time_interval)
+
 def print_help():
     print "USAGE: %s <command>" % argv[0]
     print "COMMANDS:"
@@ -194,6 +208,7 @@ def print_help():
     print "run_split_flap <sunrise/sunset> <interval=60>: run the infinite looping program using the split flap display"
     print "times: show a list of all sunset or sunrise times"
     print "load_test_split_flap: load test the split flap"
+    print "simulate_24_hours: simulate a 24 hour cycle <sunrise/sunset> <length of silumation (hours)>"
 
 if __name__ == '__main__':
     if len(argv) >= 2:
@@ -244,6 +259,17 @@ if __name__ == '__main__':
 
         elif command == 'load_test_split_flap':
             load_test_split_flap()
+
+        elif command == 'simulate_24_hours':
+            if len(argv) < 3:
+                print "You're missing the sunrise/sunset param"
+                print "EG. python manage.py simulate_24_hours sunrise"
+            else:
+                if len(argv) >= 4:
+                    sim_time = argv[3]
+                else:
+                    sim_time = 24
+                simulate_24_hours(argv[2], int(sim_time))
 
         else:
             print_help()

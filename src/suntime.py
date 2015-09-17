@@ -46,3 +46,12 @@ class SunTime(object):
         seconds_to_other_time = diff_h*60*60 + diff_m*60 + diff_s
 
         return seconds_to_other_time
+
+
+    def increment_time(self, increment):
+        """
+        increment the time in self by increment
+
+        :param increment: the amount to increase time by in seconds
+        """
+        self.time = (datetime.combine(date(1, 1, 1), self.time) + timedelta(seconds=increment)).time()
