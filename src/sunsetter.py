@@ -4,6 +4,7 @@ from .suntime import SunTime
 from datetime import date, datetime, timedelta
 import pytz
 from astral import AstralError
+import random
 
 
 class SunSetter(object):
@@ -90,3 +91,21 @@ class SunSetter(object):
 
                 except KeyError:
                     print "NO - %s" % city
+
+
+    @classmethod
+    def pick_one_city(cls, cities):
+        """
+        pick one city from the list or return None
+
+        :param cities: list of cities to pick from
+
+        :return: one city (string)
+        """
+        if cities:
+            if 'Hagen' in cities:
+                return 'Hagen'
+            else:
+                return random.choice(cities)
+        else:
+            return ''
