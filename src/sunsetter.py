@@ -17,7 +17,7 @@ class SunSetter(object):
 
         self.geo = FileGeocoder()
         self.cities = dict()
-        self.date = datetime.now(pytz.UTC)  # date to find sunrise/sunset for
+        self.date = self.get_current_datetime()  # date to find sunrise/sunset for
 
         self._prime()
 
@@ -46,11 +46,26 @@ class SunSetter(object):
 
         return short_cities
 
+
+    def refresh_date(self, dt = None):
+        """
+        reset self.date to the current date and reprime
+
+        :param dt: the new datetime (datetime.datetime). If None, use now.
+        """
+        if dt:
+            self.date = dt
+        else:
+            self.date = self.get_current_datetime()
+        self._prime()
+
+
     def get_all_times(self):
         """
         return all the sunset/sunrise times
         """
         return self.cities
+
 
     def get_all_city_names(self):
         """
@@ -58,11 +73,22 @@ class SunSetter(object):
         """
         return self.cities.keys()
 
-    def get_current_time(self):
+
+    @classmethod
+    def get_current_time(cls):
         """
         return the current time, as seen by this class
         """
-        return SunTime.get_suntime_from_time(datetime.now(pytz.UTC))
+        return SunTime.get_suntime_from_time(cls.get_current_datetime())
+
+
+    @classmethod
+    def get_current_datetime(cls):
+        """
+        return the current datetime in UTC
+        """
+        return datetime.now(pytz.UTC)
+
 
     def _prime(self):
         """
@@ -78,8 +104,7 @@ class SunSetter(object):
                     try:
                         s = c.sun(date=self.date, local=False)
                     except AstralError:
-                        # sun dowsnt rise or set in this location today. ignore
-                        # it.
+                        # sun doesn't rise or set in this location today. ignore.
                         continue
 
                     city_time_dict = {

@@ -50,6 +50,10 @@ def run_cli_loop(rise_or_set='sunrise', interval=60):
     """
     s = SunSetter()
     while True:
+        if (s.get_current_datetime() - s.date).days > 0:
+            print "refreshing the date"
+            s.refresh_date()
+
         cities = s.find_rise_or_set_at_time(
             interval=interval,
             rise_or_set=rise_or_set
@@ -74,6 +78,10 @@ def run_split_flap_loop(rise_or_set='sunrise', interval=60):
     s = SunSetter()
     while True:
         try:
+            if (s.get_current_datetime() - s.date).days > 0:
+                print "refreshing the date"
+                s.refresh_date()
+
             cities = s.find_rise_or_set_at_time(
                 interval=interval,
                 rise_or_set=rise_or_set
