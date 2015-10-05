@@ -1,7 +1,7 @@
 import os
 
 # the number of characters in the split flap display
-SPLIT_FLAP_NUMBER_OF_CHARCTERS = 25
+SPLIT_FLAP_NUMBER_OF_CHARCTERS = 24
 
 
 # Path to the file to store all the locations in for offline use
